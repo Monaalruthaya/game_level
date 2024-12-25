@@ -1,9 +1,3 @@
-//
-//  GameViewController.swift
-//  game_level1
-//
-//  Created by رشا القرني on 11/06/1446 AH.
-//
 
 import UIKit
 import SpriteKit
