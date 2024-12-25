@@ -19,11 +19,21 @@ class RoqaaLevel3: SKScene {
     var isTimerStarted = false // متغير لتحديد ما إذا كان التايمر قد بدأ
 
     override func didMove(to view: SKView) {
+        let background = SKSpriteNode(imageNamed: "background1")
+        background.position = CGPoint(x: size.width / 2, y: size.height / 2)
+        background.size = CGSize(width: size.width, height: size.height)
+        background.zPosition = -1
+        addChild(background)
+        
+        
+        
+        
+        
         // زر الهوم
         let button = SKSpriteNode(imageNamed: "homeBotton")
         button.name = "button" // اسم الزر لتحديد الأكشن
         button.size = CGSize(width: 100, height: 100) // الحجم النسبي
-        button.position = CGPoint(x: -500,y:330)
+        button.position = CGPoint(x: 70,y:720)
         button.zPosition = 1
         addChild(button)
         
@@ -31,13 +41,12 @@ class RoqaaLevel3: SKScene {
         let heartSpacing: CGFloat = 10.0 // المسافة بين القلوب
         let heartWidth: CGFloat = size.width * 0.05 // عرض القلب النسبي
         let totalHeartsWidth = CGFloat(lives) * heartWidth + CGFloat(lives - 1) * heartSpacing
-        let startX = -totalHeartsWidth / 2 + heartWidth / 2
+        _ = -totalHeartsWidth / 2 + heartWidth / 2
 
         for i in 0..<lives {
             let heart = SKSpriteNode(imageNamed: "heart")
             heart.size = CGSize(width: heartWidth * 1.2, height: heartWidth * 1.2) // جعل القلب الممتلئ أكبر بنسبة 20%
-            heart.position = CGPoint(x: startX + CGFloat(i) * (heartWidth + heartSpacing),
-                                     y: size.height / 2 - heart.size.height / 2 - 50) // 50px padding from top
+            heart.position = CGPoint(x: CGFloat(600 + (i * 70)), y: 700) // 50px padding from top
             heart.zPosition = 2
             addChild(heart)
             hearts.append(heart)
@@ -47,28 +56,28 @@ class RoqaaLevel3: SKScene {
         let character = SKSpriteNode(imageNamed: "star")
         character.name = "character"
         character.size = CGSize(width:100,height: 100) // حجم الشخصية النسبي
-        character.position = CGPoint(x:0, y:60) // في المنتصف السفلي
+        character.position = CGPoint(x:600, y:400) // في المنتصف السفلي
         character.zPosition = 1
         character.alpha = 1.0
         addChild(character)
         
         // حركة الشخصية
-        let move1 = SKAction.move(to: CGPoint(x: -480, y:  200), duration: 2)
-        let move2 = SKAction.move(to: CGPoint(x: 320, y:  200), duration: 2)
-        let move3 = SKAction.move(to: CGPoint(x: -480, y:  160), duration: 2)
-        let move4 = SKAction.move(to: CGPoint(x: -480, y:  0), duration: 2)
-        let move5 = SKAction.move(to: CGPoint(x: -80, y:  160), duration: 2)
-        let move6 = SKAction.move(to: CGPoint(x: -100, y: 0), duration: 2)
-        let move7 = SKAction.move(to: CGPoint(x: 320, y:  150), duration: 2)
-        let move8 = SKAction.move(to: CGPoint(x: 80, y:  -100), duration: 2)
-        let move9 = SKAction.move(to: CGPoint(x: -320, y:  -80), duration: 2)
-        let move10 = SKAction.move(to: CGPoint(x: 320, y:  -200), duration: 2)
-        let move11 = SKAction.move(to: CGPoint(x: -240, y:  -240), duration: 2)
-        let move12 = SKAction.move(to: CGPoint(x: -320, y:  -200), duration: 2)
-        let move13 = SKAction.move(to: CGPoint(x: -480, y:  -320), duration: 2)
-
-        let join = SKAction.sequence([move1, move2, move3, move4, move5, move6,move7, move8, move9, move10, move11, move12,move13])
-        character.run(join) { [weak self] in
+        let move1 = SKAction.move(to: CGPoint(x: 100, y:  400), duration: 2)
+       let move2 = SKAction.move(to: CGPoint(x: 1000, y:  500), duration: 2)
+        let move3 = SKAction.move(to: CGPoint(x: 100, y:  600), duration: 2)
+        let move4 = SKAction.move(to: CGPoint(x: 1000, y:  500), duration: 2)
+       let move5 = SKAction.move(to: CGPoint(x: 800, y:  400), duration: 1)
+       let move6 = SKAction.move(to: CGPoint(x: 700, y:  500), duration: 1)
+       let move7 = SKAction.move(to: CGPoint(x: 400, y:  300), duration: 1)
+        let move8 = SKAction.move(to: CGPoint(x: 200, y:  500), duration: 1)
+       let move9 = SKAction.move(to: CGPoint(x: 800, y:  400), duration: 2)
+        let move10 = SKAction.move(to: CGPoint(x: 300, y:  300), duration: 2)
+        let move11 = SKAction.move(to: CGPoint(x: 800, y:  250), duration: 2)
+        let move12 = SKAction.move(to: CGPoint(x: 400, y:  200), duration: 2)
+       let move13 = SKAction.move(to: CGPoint(x: 1000, y:  100), duration: 2)
+        let join = SKAction.sequence([move1, move2,move3,move4,move5,move6,move7,move8, move9,move10,move11,move12,move13])
+        character.run(join)
+        { [weak self] in
             // بعد توقف النجمة، نبدأ التايمر
             self?.startTimer()
         }
@@ -76,8 +85,7 @@ class RoqaaLevel3: SKScene {
         // إضافة الفريم في أقصى اليمين
         let frame = SKSpriteNode(imageNamed: "frame")
         frame.size = CGSize(width: size.width * 0.25, height: size.height * 0.1) // حجم الفريم
-        frame.position = CGPoint(x: size.width / 2 - frame.size.width / 2 - 20, // أعلى اليمين مع padding
-                                 y: size.height / 2 - frame.size.height / 2 - 50)
+        frame.position = CGPoint(x: 1000, y: 700)
         frame.zPosition = 1
         addChild(frame)
         
@@ -87,7 +95,7 @@ class RoqaaLevel3: SKScene {
         timerRectangle = SKShapeNode(path: rectPath)
         timerRectangle.fillColor = SKColor(hex: 0xAC5848) // Desired color
         timerRectangle.lineWidth = 0 // Set border width to zero to make it borderless
-        timerRectangle.position = CGPoint(x: size.width / 2 - 100, y: size.height / 2 - 45) // Adjust position above the frame
+        timerRectangle.position = CGPoint(x: 1068, y: 745) // Adjust position above the frame
         timerRectangle.zPosition = 2
         addChild(timerRectangle)
 
@@ -185,6 +193,5 @@ class RoqaaLevel3: SKScene {
         gameOverScene.scaleMode = .resizeFill
         self.view?.presentScene(gameOverScene, transition: SKTransition.fade(withDuration: 0.5))
     }
+
 }
-
-
