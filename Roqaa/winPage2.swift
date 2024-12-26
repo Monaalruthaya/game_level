@@ -9,7 +9,7 @@
 import SpriteKit
 import GameplayKit
 
-class winpage2: SKScene {
+class winPage2: SKScene {
     
 
     let homeButton = SKSpriteNode(imageNamed: "home")
@@ -54,15 +54,15 @@ class winpage2: SKScene {
         
         // زر التالي ⏩
         nextButton.name = "nextButton"
-        nextButton.position = CGPoint(x: 800, y: 300)
-        nextButton.zPosition = 4
+        nextButton.position = CGPoint(x: 850, y: 250)
+        nextButton.zPosition = 6
         addChild(nextButton)
         
         // النص 📜
         successLabel.text = "أحسنت، يلا ننتقل للمستوى الثاني"
-        successLabel.fontSize = 25
-        successLabel.fontColor = .black // or any other built-in color
-        successLabel.position = CGPoint(x: 700, y: 400)
+        successLabel.fontSize = 27
+        successLabel.fontColor = .font // or any other built-in color
+        successLabel.position = CGPoint(x: 700, y: 390)
         successLabel.zPosition = 5
         addChild(successLabel)
     }

@@ -1,23 +1,29 @@
 //
-//  GameScene.swift
-//  game
+//  lossPage3.swift
+//  Roqaa
 //
-//  Created by Bshayr369 on 24/06/1446 AH.
+//  Created by رشا القرني on 25/06/1446 AH.
 //
+
+//
+//  winpage2 2.swift
+//  Roqaa
+//
+//  Created by رشا القرني on 25/06/1446 AH.
+//
+
+
+
 
 import SpriteKit
 import GameplayKit
 
-class page1: SKScene {
+class lossPage3: SKScene {
     
-//    
-//  
-
-
-
+    
     let homeButton = SKSpriteNode(imageNamed: "home")
     let nextButton = SKSpriteNode(imageNamed: "arrow")
-    let foxNode = SKSpriteNode(imageNamed: "fox cele")
+    let surpriseNode = SKSpriteNode(imageNamed: "surprise") // صورة الثعلب
     let successLabel = SKLabelNode(fontNamed: "AvenirNext-Bold") // النص
     
     // MARK: - إعداد المشهد
@@ -50,20 +56,20 @@ class page1: SKScene {
         addChild(popup)
         
         // الثعلب 🦊
-        foxNode.name = "surprise"
-        foxNode.position = CGPoint(x: 400, y: 400)
-        foxNode.zPosition = 3
-        addChild(foxNode)
+        surpriseNode.name = "surprise"
+        surpriseNode.position = CGPoint(x: 400, y: 400)
+        surpriseNode.zPosition = 3
+        addChild(surpriseNode)
         
         // زر التالي ⏩
         nextButton.name = "nextButton"
         nextButton.position = CGPoint(x: 850, y: 250)
-        nextButton.zPosition = 6
+        nextButton.zPosition = 4
         addChild(nextButton)
         
         // النص 📜
-        successLabel.text = "أحسنت، يلا ننتقل للمستوى الثاني"
-        successLabel.fontSize = 27
+        successLabel.text = "حاول مره ثانية!"
+        successLabel.fontSize = 48
         successLabel.fontColor = .font // or any other built-in color
         successLabel.position = CGPoint(x: 700, y: 390)
         successLabel.zPosition = 5
@@ -79,7 +85,7 @@ class page1: SKScene {
             if touchedNode.name == "button" {
                 buttonAction()
             } else if touchedNode.name == "nextButton" {
-                game_level_1()
+                game_level_3()
             }
         }
     }
@@ -90,8 +96,8 @@ class page1: SKScene {
         self.view?.presentScene(back, transition: SKTransition.fade(withDuration: 0.5))
     }
 
-    func game_level_1() {
-        let move = RoqaaLevel2(size: size)
+    func game_level_3() {
+        let move = RoqaaLevel3(size: size)
         move.scaleMode = .resizeFill
         self.view?.presentScene(move, transition: SKTransition.fade(withDuration: 0.5))
     }

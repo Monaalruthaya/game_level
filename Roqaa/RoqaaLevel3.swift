@@ -155,13 +155,13 @@ class RoqaaLevel3: SKScene {
     }
 
     func buttonAction() {
-        let back = homee(size: size)
+        let back = HomeScene(size: size)
         back.scaleMode = .resizeFill
         self.view?.presentScene(back, transition: SKTransition.fade(withDuration: 0.5))
     }
 
     func winpage() {
-        let move = homee(size: size)
+        let move = winPage3(size: size)
         move.scaleMode = .resizeFill
         self.view?.presentScene(move, transition: SKTransition.fade(withDuration: 0.5))
     }
@@ -189,7 +189,7 @@ class RoqaaLevel3: SKScene {
     }
 
     func goToGameOverScene() {
-        let gameOverScene = homee(size: size)
+        let gameOverScene = lossPage3(size: size)
         gameOverScene.scaleMode = .resizeFill
         self.view?.presentScene(gameOverScene, transition: SKTransition.fade(withDuration: 0.5))
     }

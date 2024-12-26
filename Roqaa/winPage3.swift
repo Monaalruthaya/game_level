@@ -1,22 +1,20 @@
 //
-//  GameScene.swift
-//  game
+//  winPage3.swift
+//  Roqaa
 //
-//  Created by Bshayr369 on 24/06/1446 AH.
+//  Created by رشا القرني on 25/06/1446 AH.
 //
+
+
 
 import SpriteKit
 import GameplayKit
 
-class page1: SKScene {
+class winPage3: SKScene {
     
-//    
-//  
-
-
 
     let homeButton = SKSpriteNode(imageNamed: "home")
-    let nextButton = SKSpriteNode(imageNamed: "arrow")
+   
     let foxNode = SKSpriteNode(imageNamed: "fox cele")
     let successLabel = SKLabelNode(fontNamed: "AvenirNext-Bold") // النص
     
@@ -55,14 +53,10 @@ class page1: SKScene {
         foxNode.zPosition = 3
         addChild(foxNode)
         
-        // زر التالي ⏩
-        nextButton.name = "nextButton"
-        nextButton.position = CGPoint(x: 850, y: 250)
-        nextButton.zPosition = 6
-        addChild(nextButton)
+      
         
         // النص 📜
-        successLabel.text = "أحسنت، يلا ننتقل للمستوى الثاني"
+        successLabel.text = "أحسنت أتممت مهام اليوم!"
         successLabel.fontSize = 27
         successLabel.fontColor = .font // or any other built-in color
         successLabel.position = CGPoint(x: 700, y: 390)
@@ -78,8 +72,6 @@ class page1: SKScene {
             
             if touchedNode.name == "button" {
                 buttonAction()
-            } else if touchedNode.name == "nextButton" {
-                game_level_1()
             }
         }
     }
@@ -90,9 +82,6 @@ class page1: SKScene {
         self.view?.presentScene(back, transition: SKTransition.fade(withDuration: 0.5))
     }
 
-    func game_level_1() {
-        let move = RoqaaLevel2(size: size)
-        move.scaleMode = .resizeFill
-        self.view?.presentScene(move, transition: SKTransition.fade(withDuration: 0.5))
-    }
+    
 }
+
