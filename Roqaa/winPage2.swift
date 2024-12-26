@@ -1,19 +1,16 @@
 //
-//  GameScene.swift
-//  game
+//  winPage2.swift
+//  Roqaa
 //
-//  Created by Bshayr369 on 24/06/1446 AH.
+//  Created by رشا القرني on 25/06/1446 AH.
 //
+
 
 import SpriteKit
 import GameplayKit
 
-class page1: SKScene {
+class winpage2: SKScene {
     
-//    
-//  
-
-
 
     let homeButton = SKSpriteNode(imageNamed: "home")
     let nextButton = SKSpriteNode(imageNamed: "arrow")
@@ -79,7 +76,7 @@ class page1: SKScene {
             if touchedNode.name == "button" {
                 buttonAction()
             } else if touchedNode.name == "nextButton" {
-                game_level_1()
+                game_level_2()
             }
         }
     }
@@ -90,9 +87,10 @@ class page1: SKScene {
         self.view?.presentScene(back, transition: SKTransition.fade(withDuration: 0.5))
     }
 
-    func game_level_1() {
-        let move = RoqaaLevel2(size: size)
+    func game_level_2() {
+        let move = RoqaaLevel3(size: size)
         move.scaleMode = .resizeFill
         self.view?.presentScene(move, transition: SKTransition.fade(withDuration: 0.5))
     }
 }
+
