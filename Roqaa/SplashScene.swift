@@ -19,7 +19,8 @@ class SplashScene: SKScene {
             guard let self = self else { return }
             
             // Transition to HomeScene
-            let homeScene = RoqaaLevel3(size: self.size)
+            let homeScene = RoqaaLevel2(size: self.size)
+
             homeScene.scaleMode = .aspectFill
             self.view?.presentScene(homeScene, transition: SKTransition.fade(withDuration: 1.0))
         }

@@ -19,11 +19,17 @@ class RoqaaLevel2: SKScene {
     var isTimerStarted = false // متغير لتحديد ما إذا كان التايمر قد بدأ
 
     override func didMove(to view: SKView) {
+        let background = SKSpriteNode(imageNamed: "background1")
+        background.position = CGPoint(x: size.width / 2, y: size.height / 2)
+        background.size = CGSize(width: size.width, height: size.height)
+        background.zPosition = -1
+        addChild(background)
+        
         // زر الهوم
         let button = SKSpriteNode(imageNamed: "homeBotton")
         button.name = "button" // اسم الزر لتحديد الأكشن
         button.size = CGSize(width: 100, height: 100) // الحجم النسبي
-        button.position = CGPoint(x: -500,y:330)
+        button.position = CGPoint(x: 70, y: 720)
         button.zPosition = 1
         addChild(button)
         
@@ -31,39 +37,38 @@ class RoqaaLevel2: SKScene {
         let heartSpacing: CGFloat = 10.0 // المسافة بين القلوب
         let heartWidth: CGFloat = size.width * 0.05 // عرض القلب النسبي
         let totalHeartsWidth = CGFloat(lives) * heartWidth + CGFloat(lives - 1) * heartSpacing
-        let startX = -totalHeartsWidth / 2 + heartWidth / 2
+        _ = -totalHeartsWidth / 2 + heartWidth / 2
 
         for i in 0..<lives {
             let heart = SKSpriteNode(imageNamed: "heart")
             heart.size = CGSize(width: heartWidth * 1.2, height: heartWidth * 1.2) // جعل القلب الممتلئ أكبر بنسبة 20%
-            heart.position = CGPoint(x: startX + CGFloat(i) * (heartWidth + heartSpacing),
-                                     y: size.height / 2 - heart.size.height / 2 - 50) // 50px padding from top
+            heart.position = CGPoint(x: CGFloat(600 + (i * 70)), y: 700) // 50px padding from top
             heart.zPosition = 2
             addChild(heart)
             hearts.append(heart)
         }
-        
+
         // الشخصية مع خصائصها
         let character = SKSpriteNode(imageNamed: "star")
         character.name = "character"
-        character.size = CGSize(width:150,height: 150) // حجم الشخصية النسبي
-        character.position = CGPoint(x:0, y:60) // في المنتصف السفلي
+        character.size = CGSize(width: 150, height: 150) // حجم الشخصية النسبي
+        character.position = CGPoint(x: 0, y: 60) // في المنتصف السفلي
         character.zPosition = 1
         character.alpha = 1.0
         addChild(character)
-        
+
         // حركة الشخصية
-        let move1 = SKAction.move(to: CGPoint(x: -480, y:  250), duration: 3)
-        let move2 = SKAction.move(to: CGPoint(x: -480, y:  -220), duration: 3)
-        let move3 = SKAction.move(to: CGPoint(x: -240, y:  250), duration: 3)
-        let move4 = SKAction.move(to: CGPoint(x: -160, y:  -220), duration: 3)
-        let move5 = SKAction.move(to: CGPoint(x: 0, y:  240), duration: 3)
-        let move6 = SKAction.move(to: CGPoint(x: 0, y:  -130), duration: 3)
-        let move7 = SKAction.move(to: CGPoint(x: 160, y:  240), duration: 3)
-        let move8 = SKAction.move(to: CGPoint(x: 240, y:  -160), duration: 3)
-        let move9 = SKAction.move(to: CGPoint(x: 400, y:  220), duration: 3)
-        let move10 = SKAction.move(to: CGPoint(x: 400, y:  -80), duration: 3)
-        let join = SKAction.sequence([move1, move2, move3, move4, move5, move6, move7,move8,move9,move10])
+        let move1 = SKAction.move(to: CGPoint(x: 70, y: 600), duration: 3)
+        let move2 = SKAction.move(to: CGPoint(x: 120, y: 150), duration: 3)
+        let move3 = SKAction.move(to: CGPoint(x: 400, y: 600), duration: 3)
+        let move4 = SKAction.move(to: CGPoint(x: 500, y: 270), duration: 3)
+        let move5 = SKAction.move(to: CGPoint(x: 600, y: 600), duration: 3)
+        let move6 = SKAction.move(to: CGPoint(x: 800, y: 250), duration: 3)
+        let move7 = SKAction.move(to: CGPoint(x: 900, y: 550), duration: 3)
+        let move8 = SKAction.move(to: CGPoint(x: 900, y: 120), duration: 3)
+        let move9 = SKAction.move(to: CGPoint(x: 1000, y: 450), duration: 3)
+        let move10 = SKAction.move(to: CGPoint(x: 1000, y: 400), duration: 3)
+        let join = SKAction.sequence([move1, move2, move3, move4, move5, move6, move7, move8, move9, move10])
         character.run(join) { [weak self] in
             // بعد توقف النجمة، نبدأ التايمر
             self?.startTimer()
@@ -72,21 +77,18 @@ class RoqaaLevel2: SKScene {
         // إضافة الفريم في أقصى اليمين
         let frame = SKSpriteNode(imageNamed: "frame")
         frame.size = CGSize(width: size.width * 0.25, height: size.height * 0.1) // حجم الفريم
-        frame.position = CGPoint(x: size.width / 2 - frame.size.width / 2 - 20, // أعلى اليمين مع padding
-                                 y: size.height / 2 - frame.size.height / 2 - 50)
+        frame.position = CGPoint(x: 1000, y: 700)
         frame.zPosition = 1
         addChild(frame)
         
-        // إضافة المستطيل الذي يمثل التايمر
         // Adding the timer rectangle
         let rectPath = CGPath(roundedRect: CGRect(x: -195, y: -68, width: 205, height: 46), cornerWidth: 17, cornerHeight: 17, transform: nil)
         timerRectangle = SKShapeNode(path: rectPath)
         timerRectangle.fillColor = SKColor(hex: 0xAC5848) // Desired color
         timerRectangle.lineWidth = 0 // Set border width to zero to make it borderless
-        timerRectangle.position = CGPoint(x: size.width / 2 - 100, y: size.height / 2 - 45) // Adjust position above the frame
+        timerRectangle.position = CGPoint(x: 1068, y: 745) // Adjust position above the frame
         timerRectangle.zPosition = 2
         addChild(timerRectangle)
-
     }
 
     // بدء التايمر
@@ -116,8 +118,6 @@ class RoqaaLevel2: SKScene {
         timerRectangle.path = fillPath
     }
 
-
-
     // تحديد مكان اللمس
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let touch = touches.first {
@@ -143,13 +143,13 @@ class RoqaaLevel2: SKScene {
     }
 
     func buttonAction() {
-        let back = homee(size: size)
+        let back = HomeScene(size: size)
         back.scaleMode = .resizeFill
         self.view?.presentScene(back, transition: SKTransition.fade(withDuration: 0.5))
     }
 
     func winpage() {
-        let move = homee(size: size)
+        let move = winPage2(size: size)
         move.scaleMode = .resizeFill
         self.view?.presentScene(move, transition: SKTransition.fade(withDuration: 0.5))
     }
@@ -177,18 +177,17 @@ class RoqaaLevel2: SKScene {
     }
 
     func goToGameOverScene() {
-        let gameOverScene = homee(size: size)
+        let gameOverScene = losspage2(size: size)
         gameOverScene.scaleMode = .resizeFill
         self.view?.presentScene(gameOverScene, transition: SKTransition.fade(withDuration: 0.5))
     }
 }
 
-// إضافة خاصية اللون ل SKColor
 extension SKColor {
-    convenience init(hex: Int) {
-        self.init(red: CGFloat((hex >> 16) & 0xFF) / 255.0,
-                  green: CGFloat((hex >> 8) & 0xFF) / 255.0,
-                  blue: CGFloat(hex & 0xFF) / 255.0,
-                  alpha: 1.0)
+    convenience init(hex: Int, alpha: CGFloat = 1.0) {
+        let red = CGFloat((hex >> 16) & 0xFF) / 255.0
+        let green = CGFloat((hex >> 8) & 0xFF) / 255.0
+        let blue = CGFloat(hex & 0xFF) / 255.0
+        self.init(red: red, green: green, blue: blue, alpha: alpha)
     }
 }
