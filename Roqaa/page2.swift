@@ -45,15 +45,15 @@ class page2: SKScene {
         
         // زر التالي ⏩
         nextButton.name = "nextButton"
-        nextButton.position = CGPoint(x: 800, y: 300)
+        nextButton.position = CGPoint(x: 850, y: 250)
         nextButton.zPosition = 4
         addChild(nextButton)
         
         // النص 📜
         successLabel.text = "حاول مره ثانية!"
-        successLabel.fontSize = 25
-        successLabel.fontColor = .black // or any other built-in color
-        successLabel.position = CGPoint(x: 600, y: 400)
+        successLabel.fontSize = 48
+        successLabel.fontColor = .font // or any other built-in color
+        successLabel.position = CGPoint(x: 700, y: 390)
         successLabel.zPosition = 5
         addChild(successLabel)
     }
