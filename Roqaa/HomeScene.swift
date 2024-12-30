@@ -247,17 +247,25 @@ class HomeScene: SKScene {
                 addChild(playButton) // Add the play button to the scene
             }
             
-            override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-                guard let touch = touches.first else { return }
-                let location = touch.location(in: self)
-                let node = atPoint(location)
-                
-                // Check if the play button was tapped
-                if node.name == "playButton" {
-                    print("Play button tapped")
-                    // Add functionality to start the game or navigate to another scene
-                }
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard let touch = touches.first else { return }
+        let location = touch.location(in: self)
+        let node = atPoint(location)
+        
+        // Check if the play button was tapped
+        if node.name == "playButton" {
+            print("Play button tapped")
+            
+            // Create the new scene
+            let roqaaLevel1Scene = RoqaaLevel1(size: self.size)
+            roqaaLevel1Scene.scaleMode = .resizeFill
+            
+            // Transition to the new scene
+            let transition = SKTransition.fade(withDuration: 1.0) // يمكنك اختيار نوع الانتقال
+            self.view?.presentScene(roqaaLevel1Scene, transition: transition)
+        }
     }
+
 }
 
 // SwiftUI component to display HomeScene
