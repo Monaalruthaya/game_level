@@ -209,44 +209,48 @@
 //
 import SpriteKit
 import SwiftUI
+
 class HomeScene: SKScene {
     override func didMove(to view: SKView) {
         // Set the background color
         backgroundColor = .white
         
         // Load the home image
-        let homeImage = SKSpriteNode(imageNamed: "home") // Ensure the name matches the asset
+        let homeImage = SKSpriteNode(imageNamed: "home")
         homeImage.position = CGPoint(x: size.width / 2, y: size.height / 2)
-        homeImage.size = CGSize(width: size.width, height: size.height) // Adjust size to fit the screen
+        homeImage.size = CGSize(width: size.width, height: size.height)
         
-        addChild(homeImage) // Add the home image to the scene
-        
+        addChild(homeImage)
+
         // Add text "المستوى الأول"
         let levelText = SKLabelNode(text: "المستوى الأول")
-        levelText.fontName = "SFArabicRounded-Bold" // Use SF Arabic Rounded font
-        levelText.fontSize = 50 // Adjust size
-        levelText.fontColor = UIColor(red: 0.502, green: 0.2, blue: 0.0, alpha: 1.0) // Custom color
-        levelText.position = CGPoint(x: size.width / 2, y: size.height * 0.7) // Adjust position
-        // Apply the offset
-                levelText.position.x += 300 // Offset x by 40
-                levelText.position.y += 145 // Offset y by 57
+        levelText.fontName = "SFArabicRounded-Bold"
+        levelText.fontSize = 50
+        levelText.fontColor = UIColor(red: 0.502, green: 0.2, blue: 0.0, alpha: 1.0)
+        levelText.position = CGPoint(x: size.width / 2, y: size.height * 0.7)
+        levelText.position.x += 300
+        levelText.position.y += 135
         
-        levelText.zPosition = 1// Ensure it's above other elements
-        addChild(levelText) // Add text to the scene
-        
-        
+        levelText.zPosition = 1
+        addChild(levelText)
+        levelText.accessibilityHint = "رقم المستوى" // Hint for VoiceOver
+
         // Create a play button as an SKSpriteNode
-                let playButton = SKSpriteNode(imageNamed: "Play") // Use your play button image
-                playButton.position = CGPoint(x: size.width / 2, y: size.height / 2) // Position it in the center (adjust as needed)
+        let playButton = SKSpriteNode(imageNamed: "Play")
+        playButton.position = CGPoint(x: size.width / 2, y: size.height / 2)
         playButton.position.x += 4.701
         playButton.position.y += 24.659
 
-                playButton.name = "playButton" // Name for touch detection
-                playButton.size = CGSize(width: 100, height: 100) // Set the size of the button (adjust as needed)
-                
-                addChild(playButton) // Add the play button to the scene
-            }
-            
+        playButton.name = "playButton" // Name for touch detection
+        playButton.size = CGSize(width: 100, height: 100)
+        
+        // إضافة نص التعليق الصوتي
+        playButton.accessibilityLabel = "زر اللعب" // Label for VoiceOver
+        playButton.accessibilityHint = "اضغط للبدء في اللعب" // Hint for VoiceOver
+        
+        addChild(playButton)
+    }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first else { return }
         let location = touch.location(in: self)
@@ -261,29 +265,27 @@ class HomeScene: SKScene {
             roqaaLevel1Scene.scaleMode = .resizeFill
             
             // Transition to the new scene
-            let transition = SKTransition.fade(withDuration: 1.0) // يمكنك اختيار نوع الانتقال
+            let transition = SKTransition.fade(withDuration: 1.0)
             self.view?.presentScene(roqaaLevel1Scene, transition: transition)
         }
     }
-
 }
 
 // SwiftUI component to display HomeScene
 struct HomeSceneView: View {
     var body: some View {
         SpriteView(scene: {
-            let scene = HomeScene(size: CGSize(width: 300, height: 400)) // Set the desired size
-            scene.scaleMode = .resizeFill // Adjust as necessary
+            let scene = HomeScene(size: CGSize(width: 300, height: 400))
+            scene.scaleMode = .resizeFill
             return scene
         }())
-        .ignoresSafeArea() // Fill the screen
+        .ignoresSafeArea()
     }
 }
 
 // Preview for HomeSceneView
 struct HomeSceneView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeSceneView() // Use the SwiftUI view for preview
+        HomeSceneView()
     }
 }
-//restdyfguhiop[]
