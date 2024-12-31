@@ -1,10 +1,3 @@
-//
-//  GameScene.swift
-//  game_level1
-//
-//  Created by رشا القرني on 11/06/1446 AH.
-//the edited one by fai
-
 import GameplayKit
 import SpriteKit
 import UIKit
@@ -17,6 +10,9 @@ class RoqaaLevel1: SKScene {
     var timer: Timer? // المؤقت
     var timeRemaining: Int = 20 // الوقت المتبقي للمؤقت
     var isTimerStarted = false // متغير لتحديد ما إذا كان التايمر قد بدأ
+    
+    private var popupContainer: SKNode!
+    private var characterContainer: SKNode!
 
     override func didMove(to view: SKView) {
         let background = SKSpriteNode(imageNamed: "background1")
@@ -26,7 +22,7 @@ class RoqaaLevel1: SKScene {
         addChild(background)
         
         
-        
+        showPopup()
         
         
         // زر الهوم
@@ -51,30 +47,6 @@ class RoqaaLevel1: SKScene {
             addChild(heart)
             hearts.append(heart)
         }
-        
-        // الشخصية مع خصائصها
-        let character = SKSpriteNode(imageNamed: "star")
-        character.name = "character"
-        character.size = CGSize(width:200,height: 200) // حجم الشخصية النسبي
-        character.position = CGPoint(x:600, y:400) // في المنتصف السفلي
-        character.zPosition = 1
-        character.alpha = 1.0
-        addChild(character)
-        
-        // حركة الشخصية
-        let move1 = SKAction.move(to: CGPoint(x: 100, y:  400), duration: 5)
-       let move2 = SKAction.move(to: CGPoint(x: 800, y:  500), duration: 5)
-        let move3 = SKAction.move(to: CGPoint(x: 100, y:  600), duration: 5)
-        let move4 = SKAction.move(to: CGPoint(x: 900, y:  500), duration: 5)
-        let move5 = SKAction.move(to: CGPoint(x: 100, y:  400), duration: 5)
-       let move6 = SKAction.move(to: CGPoint(x: 900, y:  300), duration: 5)
-        let move7 = SKAction.move(to: CGPoint(x: 400, y:  250), duration: 5)
-        let join = SKAction.sequence([move1, move2,move3,move4,move5,move6,move7])
-        character.run(join)
-        { [weak self] in
-            // بعد توقف النجمة، نبدأ التايمر
-            self?.startTimer()
-        }
 
         // إضافة الفريم في أقصى اليمين
         let frame = SKSpriteNode(imageNamed: "frame")
@@ -82,9 +54,8 @@ class RoqaaLevel1: SKScene {
         frame.position = CGPoint(x: 1000, y: 700)
         frame.zPosition = 1
         addChild(frame)
-        
+
         // إضافة المستطيل الذي يمثل التايمر
-        // Adding the timer rectangle
         let rectPath = CGPath(roundedRect: CGRect(x: -195, y: -68, width: 205, height: 46), cornerWidth: 17, cornerHeight: 17, transform: nil)
         timerRectangle = SKShapeNode(path: rectPath)
         timerRectangle.fillColor = SKColor(hex: 0xAC5848) // Desired color
@@ -92,7 +63,6 @@ class RoqaaLevel1: SKScene {
         timerRectangle.position = CGPoint(x: 1068, y: 745) // Adjust position above the frame
         timerRectangle.zPosition = 2
         addChild(timerRectangle)
-
     }
 
     // بدء التايمر
@@ -122,15 +92,74 @@ class RoqaaLevel1: SKScene {
         timerRectangle.path = fillPath
     }
 
+    private func showPopup() {
+        popupContainer = SKNode()
+        popupContainer.zPosition = 2
+        addChild(popupContainer)
 
+        let popupImage = SKSpriteNode(imageNamed: "img7")
+        popupImage.position = CGPoint(x: size.width / 2, y: size.height / 2)
+        popupImage.zPosition = 2
+        popupContainer.addChild(popupImage)
+
+        let character = SKSpriteNode(imageNamed: "img2")
+        character.position = CGPoint(x: size.width * 0.4, y: size.height * 0.55)
+        character.zPosition = 3
+        popupContainer.addChild(character)
+
+        let textBubble = SKSpriteNode(imageNamed: "img3")
+        textBubble.position = CGPoint(x: size.width * 0.6, y: size.height * 0.6)
+        textBubble.zPosition = 3
+        popupContainer.addChild(textBubble)
+
+        let playButton = SKSpriteNode(imageNamed: "img5")
+        playButton.position = CGPoint(x: size.width / 2, y: size.height * 0.3)
+        playButton.zPosition = 4
+        playButton.name = "playButton"
+        popupContainer.addChild(playButton)
+    }
+
+    private func showCharacterAndMessage() {
+        characterContainer = SKNode()
+        characterContainer.zPosition = 3
+        addChild(characterContainer)
+
+        let character = SKSpriteNode(imageNamed: "img2")
+        character.position = CGPoint(x: size.width * 0.2, y: size.height * 0.2)
+        character.zPosition = 3
+        characterContainer.addChild(character)
+
+        let message = SKSpriteNode(imageNamed: "img4")
+        message.position = CGPoint(x: size.width * 0.4, y: size.height * 0.25)
+        message.zPosition = 5
+        characterContainer.addChild(message)
+
+        let wait = SKAction.wait(forDuration: 5.0)
+        let remove = SKAction.run { [weak self] in
+            self?.characterContainer.removeFromParent()
+        }
+        characterContainer.run(SKAction.sequence([wait, remove]))
+    }
 
     // تحديد مكان اللمس
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let touch = touches.first {
             let location = touch.location(in: self)
             let touchedNode = atPoint(location)
-            
-            // إذا لم يكن التايمر قد بدأ، لا نفعل شيئًا
+
+            if touchedNode.name == "playButton" {
+                popupContainer.removeFromParent()
+
+                // Show the character and wait 5 seconds before starting the star movement
+                showCharacterAndMessage()
+
+                let wait = SKAction.wait(forDuration: 5.0)
+                let startMovement = SKAction.run { [weak self] in
+                    self?.startStarMovement()
+                }
+                run(SKAction.sequence([wait, startMovement]))
+            }
+
             if !isTimerStarted {
                 return
             }
@@ -145,6 +174,29 @@ class RoqaaLevel1: SKScene {
                 let generator = UIImpactFeedbackGenerator(style: .medium)
                 generator.impactOccurred()
             }
+        }
+    }
+
+    func startStarMovement() {
+        let character = SKSpriteNode(imageNamed: "star")
+        character.name = "character"
+        character.size = CGSize(width: 200, height: 200)
+        character.position = CGPoint(x: 600, y: 400)
+        character.zPosition = 1
+        character.alpha = 1.0
+        addChild(character)
+
+        let move1 = SKAction.move(to: CGPoint(x: 100, y: 400), duration: 5)
+        let move2 = SKAction.move(to: CGPoint(x: 800, y: 500), duration: 5)
+        let move3 = SKAction.move(to: CGPoint(x: 100, y: 600), duration: 5)
+        let move4 = SKAction.move(to: CGPoint(x: 900, y: 500), duration: 5)
+        let move5 = SKAction.move(to: CGPoint(x: 100, y: 400), duration: 5)
+        let move6 = SKAction.move(to: CGPoint(x: 900, y: 300), duration: 5)
+        let move7 = SKAction.move(to: CGPoint(x: 400, y: 250), duration: 5)
+        let join = SKAction.sequence([move1, move2, move3, move4, move5, move6, move7])
+
+        character.run(join) { [weak self] in
+            self?.startTimer()
         }
     }
 
@@ -163,18 +215,15 @@ class RoqaaLevel1: SKScene {
     func loseLife() {
         if lives > 0 {
             lives -= 1
-            // Remove the current heart and replace it with an empty heart
             let heart = hearts[lives]
             heart.removeFromParent()
 
-            // Create and add the empty heart in the same position
             let emptyHeart = SKSpriteNode(imageNamed: "emptyheart")
-            emptyHeart.size = CGSize(width: heart.size.width * 0.8, height: heart.size.height * 0.8) // جعل القلب الفارغ أصغر بنسبة 20%
+            emptyHeart.size = CGSize(width: heart.size.width * 0.8, height: heart.size.height * 0.8)
             emptyHeart.position = heart.position
             emptyHeart.zPosition = 2
             addChild(emptyHeart)
 
-            // Replace the heart in the array with the empty heart
             hearts[lives] = emptyHeart
         }
         if lives == 0 {
@@ -187,5 +236,4 @@ class RoqaaLevel1: SKScene {
         gameOverScene.scaleMode = .resizeFill
         self.view?.presentScene(gameOverScene, transition: SKTransition.fade(withDuration: 0.5))
     }
-
 }
