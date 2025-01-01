@@ -8,6 +8,7 @@
 import GameplayKit
 import SpriteKit
 import UIKit
+import SwiftUI
 
 class RoqaaLevel3: SKScene {
     // تعريف المتغيرات
@@ -194,4 +195,19 @@ class RoqaaLevel3: SKScene {
         self.view?.presentScene(gameOverScene, transition: SKTransition.fade(withDuration: 0.5))
     }
 
+}
+struct RoqaaLevel3View: View {
+    var body: some View {
+        SpriteView(scene: {
+            let scene = RoqaaLevel3(size: CGSize(width: 300, height: 400))
+            scene.size = UIScreen.main.bounds.size
+            scene.scaleMode = .resizeFill
+            return scene
+        }())
+        .ignoresSafeArea()
+    }
+}
+
+#Preview {
+    RoqaaLevel3View()
 }

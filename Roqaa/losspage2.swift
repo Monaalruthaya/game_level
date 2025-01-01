@@ -1,18 +1,16 @@
 //
-//  winpage2 2.swift
+//  losspage2.swift
 //  Roqaa
 //
-//  Created by رشا القرني on 25/06/1446 AH.
+//  Created by mona alruthaya on 01/07/1446 AH.
 //
-
-
 
 
 import SpriteKit
 import GameplayKit
+import SwiftUI
 
 class losspage2: SKScene {
-    
     
     let homeButton = SKSpriteNode(imageNamed: "home")
     let nextButton = SKSpriteNode(imageNamed: "arrow")
@@ -20,17 +18,12 @@ class losspage2: SKScene {
     let successLabel = SKLabelNode(fontNamed: "AvenirNext-Bold") // النص
     
     // MARK: - إعداد المشهد
-   
     override func didMove(to view: SKView) {
         let background = SKSpriteNode(imageNamed: "background1")
         background.position = CGPoint(x: size.width / 2, y: size.height / 2)
         background.size = CGSize(width: size.width, height: size.height)
         background.zPosition = -1
         addChild(background)
-        
-        
-        
-        
         
         // زر الهوم
         let button = SKSpriteNode(imageNamed: "homeBotton")
@@ -40,7 +33,6 @@ class losspage2: SKScene {
         button.zPosition = 1
         addChild(button)
 
-        
         // البوب-أب 📦
         let popup = SKSpriteNode(imageNamed: "sq")
         popup.size = CGSize(width: 700, height: 400)
@@ -63,10 +55,13 @@ class losspage2: SKScene {
         // النص 📜
         successLabel.text = "حاول مره ثانية!"
         successLabel.fontSize = 48
-        successLabel.fontColor = .font // or any other built-in color
+        successLabel.fontColor = .black // يمكنك تغيير اللون إذا رغبت
         successLabel.position = CGPoint(x: 700, y: 390)
         successLabel.zPosition = 5
         addChild(successLabel)
+
+        // تشغيل الصوت
+        playSound()
     }
     
     // تحديد مكان اللمس
@@ -94,4 +89,28 @@ class losspage2: SKScene {
         move.scaleMode = .resizeFill
         self.view?.presentScene(move, transition: SKTransition.fade(withDuration: 0.5))
     }
+
+    // دالة لتشغيل الصوت
+    func playSound() {
+        let soundAction = SKAction.playSoundFileNamed("TryAgain.mp3", waitForCompletion: false)
+        self.run(soundAction)
+    }
+}
+
+// SwiftUI View
+struct losspage2View: View {
+    var body: some View {
+        SpriteView(scene: {
+            let scene = losspage2(size: CGSize(width: 300, height: 400))
+            scene.size = UIScreen.main.bounds.size
+            scene.scaleMode = .resizeFill
+            return scene
+        }())
+        .ignoresSafeArea()
+    }
+}
+
+// Preview
+#Preview {
+    losspage2View()
 }
