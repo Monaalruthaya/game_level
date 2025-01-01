@@ -82,7 +82,7 @@ class SplashScene: SKScene {
         
         // Transition to HomeScene after a delay
         DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) { // Wait 3 seconds
-            let homeScene = RoqaaLevel1(size: self.size) // Initialize HomeScene
+            let homeScene = HomeScene(size: self.size) // Initialize HomeScene
             homeScene.scaleMode = .aspectFill
             
             // Add a transition effect
