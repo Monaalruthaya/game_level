@@ -1,6 +1,8 @@
 import GameplayKit
 import SpriteKit
 import UIKit
+import AVFoundation
+import SwiftUI
 
 class RoqaaLevel1: SKScene {
     // تعريف المتغيرات
@@ -14,6 +16,10 @@ class RoqaaLevel1: SKScene {
     private var popupContainer: SKNode!
     private var characterContainer: SKNode!
 
+    // Audio players
+    var coverYourEyePlayer: AVAudioPlayer?
+    var focusAndTryPlayer: AVAudioPlayer?
+
     override func didMove(to view: SKView) {
         let background = SKSpriteNode(imageNamed: "background1")
         background.position = CGPoint(x: size.width / 2, y: size.height / 2)
@@ -21,23 +27,21 @@ class RoqaaLevel1: SKScene {
         background.zPosition = -1
         addChild(background)
         
-        
+        loadSounds() // Load sounds
         showPopup()
-        
-        
+
         // زر الهوم
         let button = SKSpriteNode(imageNamed: "homeBotton")
         button.name = "button" // اسم الزر لتحديد الأكشن
         button.size = CGSize(width: 100, height: 100) // الحجم النسبي
-        button.position = CGPoint(x: 70,y:720)
+        button.position = CGPoint(x: 70, y: 720)
         button.zPosition = 1
         addChild(button)
-        
+
         // إنشاء القلوب في أعلى المنتصف
         let heartSpacing: CGFloat = 10.0 // المسافة بين القلوب
         let heartWidth: CGFloat = size.width * 0.05 // عرض القلب النسبي
         let totalHeartsWidth = CGFloat(lives) * heartWidth + CGFloat(lives - 1) * heartSpacing
-        _ = -totalHeartsWidth / 2 + heartWidth / 2
 
         for i in 0..<lives {
             let heart = SKSpriteNode(imageNamed: "heart")
@@ -63,6 +67,25 @@ class RoqaaLevel1: SKScene {
         timerRectangle.position = CGPoint(x: 1068, y: 745) // Adjust position above the frame
         timerRectangle.zPosition = 2
         addChild(timerRectangle)
+    }
+
+    // Load sounds
+    func loadSounds() {
+        coverYourEyePlayer = loadSound(named: "CoverYourEye")
+        focusAndTryPlayer = loadSound(named: "FocusandTry")
+    }
+
+    private func loadSound(named name: String) -> AVAudioPlayer? {
+        guard let url = Bundle.main.url(forResource: name, withExtension: "mp3") else {
+            print("Sound file \(name) not found")
+            return nil
+        }
+        do {
+            return try AVAudioPlayer(contentsOf: url)
+        } catch {
+            print("Error loading sound \(name): \(error.localizedDescription)")
+            return nil
+        }
     }
 
     // بدء التايمر
@@ -112,9 +135,12 @@ class RoqaaLevel1: SKScene {
         textBubble.zPosition = 3
         popupContainer.addChild(textBubble)
 
+        // Play the sound for img3
+        coverYourEyePlayer?.play()
+
         let playButton = SKSpriteNode(imageNamed: "img5")
-        playButton.position = CGPoint(x: size.width / 2, y: size.height * 0.3)
-        playButton.zPosition = 4
+        playButton.position = CGPoint(x: size.width / 2, y: size.height * 0.22)
+        playButton.zPosition = 3
         playButton.name = "playButton"
         popupContainer.addChild(playButton)
     }
@@ -133,6 +159,9 @@ class RoqaaLevel1: SKScene {
         message.position = CGPoint(x: size.width * 0.4, y: size.height * 0.25)
         message.zPosition = 5
         characterContainer.addChild(message)
+
+        // Play the sound for img4
+        focusAndTryPlayer?.play()
 
         let wait = SKAction.wait(forDuration: 5.0)
         let remove = SKAction.run { [weak self] in
@@ -236,4 +265,21 @@ class RoqaaLevel1: SKScene {
         gameOverScene.scaleMode = .resizeFill
         self.view?.presentScene(gameOverScene, transition: SKTransition.fade(withDuration: 0.5))
     }
+}
+
+
+struct RoqaaLevel1View: View {
+    var body: some View {
+        SpriteView(scene: {
+            let scene = RoqaaLevel1(size: CGSize(width: 300, height: 400))
+            scene.size = UIScreen.main.bounds.size
+            scene.scaleMode = .resizeFill
+            return scene
+        }())
+        .ignoresSafeArea()
+    }
+}
+
+#Preview {
+    RoqaaLevel1View()
 }

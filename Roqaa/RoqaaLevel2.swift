@@ -8,6 +8,7 @@
 import GameplayKit
 import SpriteKit
 import UIKit
+import SwiftUI
 
 class RoqaaLevel2: SKScene {
     // تعريف المتغيرات
@@ -190,4 +191,19 @@ extension SKColor {
         let blue = CGFloat(hex & 0xFF) / 255.0
         self.init(red: red, green: green, blue: blue, alpha: alpha)
     }
+}
+struct RoqaaLevel2View: View {
+    var body: some View {
+        SpriteView(scene: {
+            let scene = RoqaaLevel2(size: CGSize(width: 300, height: 400))
+            scene.size = UIScreen.main.bounds.size
+            scene.scaleMode = .resizeFill
+            return scene
+        }())
+        .ignoresSafeArea()
+    }
+}
+
+#Preview {
+    RoqaaLevel2View()
 }
